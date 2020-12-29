@@ -22,6 +22,12 @@ It includes a basic authentication API with email support.
 4. `yarn mikro-orm migration:up`
 5. `yarn start`
 
+## Testing
+1. `yarn install`
+2. `cp .env.example .env.test`
+3. modify `.env.test` file
+5. `yarn test`
+
 ## TODO
 * Captcha at UserResolver
 * Add serviceAddress to MailJob
