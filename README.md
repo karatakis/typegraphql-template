@@ -26,3 +26,4 @@ It includes a basic authentication API with email support.
 * Captcha at UserResolver
 * Add serviceAddress to MailJob
 * Use html template engines for mails
+* configure nodemailer

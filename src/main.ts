@@ -13,9 +13,10 @@ import { setupMailService } from 'src/dependencies/MailService'
 import { setupQueueWorkers } from 'src/dependencies/Queues'
 import { AuthMiddleware } from 'src/middlewares/AuthMiddleware'
 import { ENVIRONMENT, PORT } from './dependencies/Config'
+import { ErrorInterceptor } from './middlewares/ErrorInterceptor'
 
 async function main (): Promise<void> {
-  console.log('ENVIRONMENT: ', ENVIRONMENT)
+  console.log(`ENVIRONMENT: ${ENVIRONMENT}`)
   console.log('=== SETUP DATABASE ===')
   const connection = await MikroORM.init(dbConfig)
   console.log('=== SETUP MAIL SERVICE ===')
@@ -33,6 +34,7 @@ async function main (): Promise<void> {
       UserResolver
     ],
     globalMiddlewares: [
+      ErrorInterceptor,
       AuthMiddleware
     ]
   })
