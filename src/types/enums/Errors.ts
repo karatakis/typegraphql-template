@@ -17,6 +17,7 @@ export enum NotFoundErrorEnum {
 }
 
 export enum ForbiddenErrorEnum {
+  NOT_AUTHORIZED = 'NOT_AUTHORIZED',
   TOKEN_EXPIRED = 'TOKEN_EXPIRED',
   SESSION_EXPIRED = 'SESSION_EXPIRED',
   INVALID_TOKEN = 'INVALID_TOKEN'

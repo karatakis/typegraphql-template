@@ -1,5 +1,5 @@
 import { UserInputError } from 'apollo-server'
-import { Arg, Ctx, Mutation, Query, Resolver } from 'type-graphql'
+import { Arg, Ctx, Mutation, Query, Resolver, UseMiddleware } from 'type-graphql'
 import { EntityManager } from '@mikro-orm/core'
 import { hash, compare } from 'bcryptjs'
 import { sign, verify } from 'jsonwebtoken'
@@ -21,6 +21,7 @@ import { APP_NAME, JWT_SECRET } from 'src/dependencies/Config'
 import { AccessToken, RefreshToken } from 'src/types/interfaces/JwtToken'
 import { NotFoundErrorEnum, UserErrorEnum } from 'src/types/enums/Errors'
 import { isValidEmail, isValidUUID } from 'src/dependencies/Guards'
+import { AuthGuard } from 'src/middlewares/AuthGuard'
 
 function makeTokensObject (session: Session, remember: boolean): TokensObject {
   const payload = new TokensObject()
@@ -278,6 +279,7 @@ export class UserResolver {
   }
 
   @Query(() => [Session])
+  @UseMiddleware(AuthGuard)
   async sessions (
     @Ctx('user') user: User
   ): Promise<Session[]> {
@@ -286,6 +288,7 @@ export class UserResolver {
   }
 
   @Mutation(() => Boolean)
+  @UseMiddleware(AuthGuard)
   async killSessions (
     @Ctx('em') em: EntityManager,
       @Ctx('user') user: User
@@ -303,6 +306,7 @@ export class UserResolver {
   }
 
   @Mutation(() => Boolean)
+  @UseMiddleware(AuthGuard)
   async killSession (
     @Ctx('em') em: EntityManager,
       @Ctx('user') user: User,
